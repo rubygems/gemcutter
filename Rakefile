@@ -1,5 +1,8 @@
 #!/usr/bin/env rake
 
+require 'bundler'
+Bundler::GemHelper.install_tasks
+
 task :default => :test
 
 require 'rake/testtask'
