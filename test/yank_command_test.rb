@@ -20,7 +20,8 @@ class YankCommandTest < CommandTest
 
     context 'yanking a gem' do
       setup do
-        stub_api_key("key")
+        @api_key = "key"
+        stub_api_key(@api_key)
         @api = "https://rubygems.org/api/v1/gems/yank"
         stub_request(:delete, @api).to_return(:body => "Successfully yanked")
         @command.handle_options([@gem, "-v", @version])
@@ -35,10 +36,10 @@ class YankCommandTest < CommandTest
       end
 
       should 'invoke yank_gem' do
-        stub(@command).yank_gem(@version, @platform)
+        stub(@command).yank_gem(@version, @platform, @api_key)
         @command.execute
         assert_received(@command) do |command|
-          command.yank_gem(@version, @platform)
+          command.yank_gem(@version, @platform, @api_key)
         end
       end
 
@@ -48,6 +49,19 @@ class YankCommandTest < CommandTest
                          :times => 1)
         assert_requested(:delete, @api,
                          :headers => { 'Authorization' => 'key' })
+      end
+
+      should 'use given API key' do
+        other_key = 'another_key'
+
+        stub_api_key('key') {|config| stub(config).api_keys {{:another_name => other_key}}}
+
+        @command.handle_options([@gem, "-v", @version, "-k", "another_name"])
+        @command.execute
+        assert_requested(:delete, @api,
+                         :times => 1)
+        assert_requested(:delete, @api,
+                         :headers => { 'Authorization' => other_key })
       end
 
       context 'with a platform specified' do
@@ -68,10 +82,10 @@ class YankCommandTest < CommandTest
         end
 
         should 'invoke yank_gem' do
-          stub(@command).yank_gem(@version, @platform)
+          stub(@command).yank_gem(@version, @platform, @api_key)
           @command.execute
           assert_received(@command) do |command|
-            command.yank_gem(@version, @platform)
+            command.yank_gem(@version, @platform, @api_key)
           end
         end
       end
@@ -80,7 +94,8 @@ class YankCommandTest < CommandTest
 
     context 'unyanking a gem' do
       setup do
-        stub_api_key("key")
+        @api_key = "key"
+        stub_api_key(@api_key)
         @api = "https://rubygems.org/api/v1/gems/unyank"
         stub_request(:put, @api).to_return(:body => "Successfully unyanked")
         @command.handle_options([@gem, "-v", @version, "--undo"])
@@ -95,10 +110,10 @@ class YankCommandTest < CommandTest
       end
 
       should 'invoke unyank_gem' do
-        stub(@command).unyank_gem(@version, @platform)
+        stub(@command).unyank_gem(@version, @platform, @api_key)
         @command.execute
         assert_received(@command) do |command|
-          command.unyank_gem(@version, @platform)
+          command.unyank_gem(@version, @platform, @api_key)
         end
       end
 
@@ -112,7 +127,8 @@ class YankCommandTest < CommandTest
 
     context 'with a platform specified' do
       setup do
-        stub_api_key("key")
+        @api_key = 'key'
+        stub_api_key(@api_key)
         @api = "https://rubygems.org/api/v1/gems/unyank"
         @platform = "x86-darwin-10"
         stub_request(:put, @api).to_return(:body => "Successfully unyanked")
@@ -128,10 +144,10 @@ class YankCommandTest < CommandTest
       end
 
       should 'invoke unyank_gem' do
-        stub(@command).unyank_gem(@version, @platform)
+        stub(@command).unyank_gem(@version, @platform, @api_key)
         @command.execute
         assert_received(@command) do |command|
-          command.unyank_gem(@version, @platform)
+          command.unyank_gem(@version, @platform, @api_key)
         end
       end
     end
