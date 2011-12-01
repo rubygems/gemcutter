@@ -16,7 +16,7 @@ class Gem::Commands::YankCommand < Gem::Command
   end
 
   def usage
-    "#{program_name} GEM -v VERSION [-p PLATFORM] [--undo]"
+    "#{program_name} GEM -v VERSION [-p PLATFORM] [--undo] [--key KEY_NAME]"
   end
 
   def initialize
@@ -26,18 +26,25 @@ class Gem::Commands::YankCommand < Gem::Command
     add_option('--undo') do |value, options|
       options[:undo] = true
     end
+    
+    add_option('-k', '--key KEY_NAME',
+               'Use API key from your gem credentials file') do |value, options|
+      options[:key] = value
+    end
   end
 
   def execute
     sign_in
     version   = get_version_from_requirements(options[:version])
     platform  = get_platform_from_requirements(options)
+    api_key   = Gem.configuration.rubygems_api_key
+    api_key   = Gem.configuration.api_keys[options[:key].to_sym] if options[:key]
 
     if !version.nil?
       if options[:undo]
-        unyank_gem(version, platform)
+        unyank_gem(version, platform, api_key)
       else
-        yank_gem(version, platform)
+        yank_gem(version, platform, api_key)
       end
     else
       say "A version argument is required: #{usage}"
@@ -45,21 +52,21 @@ class Gem::Commands::YankCommand < Gem::Command
     end
   end
 
-  def yank_gem(version, platform)
+  def yank_gem(version, platform, api_key)
     say "Yanking gem from RubyGems.org..."
-    yank_api_request(:delete, version, platform, "api/v1/gems/yank")
+    yank_api_request(:delete, version, platform, "api/v1/gems/yank", api_key)
   end
 
-  def unyank_gem(version, platform)
+  def unyank_gem(version, platform, api_key)
     say "Unyanking gem from RubyGems.org..."
-    yank_api_request(:put, version, platform, "api/v1/gems/unyank")
+    yank_api_request(:put, version, platform, "api/v1/gems/unyank", api_key)
   end
 
   private
-    def yank_api_request(method, version, platform, api)
+    def yank_api_request(method, version, platform, api, api_key)
       name = get_one_gem_name
       response = rubygems_api_request(method, api) do |request|
-        request.add_field("Authorization", Gem.configuration.rubygems_api_key)
+        request.add_field("Authorization", api_key)
         request.set_form_data({'gem_name' => name, 'version' => version, 'platform' => platform})
       end
       say response.body

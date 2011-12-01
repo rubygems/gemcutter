@@ -24,6 +24,7 @@ end
 def stub_api_key(api_key)
   file = Gem::ConfigFile.new({})
   stub(file).rubygems_api_key { api_key }
+  yield file if block_given?
   stub(Gem).configuration { file }
 end
 
