@@ -15,7 +15,7 @@ yank` and `gem webhook`. The Rails app has moved to
 [ci]: http://travis-ci.org/rubygems/gemcutter
 
 ## <a name="dependencies"></a>Dependency Status
-[![Dependency Status](https://gemnasium.com/rubygems/gemcutter.png)][gemnasium]
+[![Dependency Status](https://gemnasium.com/rubygems/gemcutter.png?travis)][gemnasium]
 
 [gemnasium]: https://gemnasium.com/rubygems/gemcutter
 
