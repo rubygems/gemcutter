@@ -9,10 +9,10 @@ yank` and `gem webhook`. The Rails app has moved to
 ## <a name="installation"></a>Installation
     gem install gemcutter
 
-## <a name="ci"></a>Build Status
-[![Build Status](https://secure.travis-ci.org/rubygems/gemcutter.png)][ci]
+## <a name="build"></a>Build Status
+[![Build Status](https://secure.travis-ci.org/rubygems/gemcutter.png)][travis]
 
-[ci]: http://travis-ci.org/rubygems/gemcutter
+[travis]: http://travis-ci.org/rubygems/gemcutter
 
 ## <a name="dependencies"></a>Dependency Status
 [![Dependency Status](https://gemnasium.com/rubygems/gemcutter.png?travis)][gemnasium]
@@ -63,7 +63,7 @@ bug report should include a pull request with failing specs.
    so in a separate commit.)
 
 ## <a name="versions"></a>Supported Ruby Versions
-This library aims to support and is [tested against][ci] the following Ruby
+This library aims to support and is [tested against][travis] the following Ruby
 implementations:
 
 * Ruby 1.8.7
