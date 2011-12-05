@@ -1,6 +1,3 @@
-$:.unshift File.expand_path('..', __FILE__)
-$:.unshift File.expand_path('../../lib', __FILE__)
-require 'rubygems'
 require 'rubygems/commands/webhook_command'
 require 'rubygems/commands/yank_command'
 require 'test/unit'
