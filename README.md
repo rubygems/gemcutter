@@ -1,23 +1,14 @@
-# gemcutter
-
+# gemcutter [![Build Status](https://secure.travis-ci.org/rubygems/gemcutter.png)][travis] [![Dependency Status](https://gemnasium.com/rubygems/gemcutter.png?travis)][gemnasium]
 This repository now contains only the `gemcutter` gem, which provides `gem
 yank` and `gem webhook`. The Rails app has moved to
 [rubygems/rubygems.org][rubygems]. Please update your links and remotes!
 
+[travis]: http://travis-ci.org/rubygems/gemcutter
+[gemnasium]: https://gemnasium.com/rubygems/gemcutter
 [rubygems]: https://github.com/rubygems/rubygems.org
 
 ## <a name="installation"></a>Installation
     gem install gemcutter
-
-## <a name="build"></a>Build Status
-[![Build Status](https://secure.travis-ci.org/rubygems/gemcutter.png)][travis]
-
-[travis]: http://travis-ci.org/rubygems/gemcutter
-
-## <a name="dependencies"></a>Dependency Status
-[![Dependency Status](https://gemnasium.com/rubygems/gemcutter.png?travis)][gemnasium]
-
-[gemnasium]: https://gemnasium.com/rubygems/gemcutter
 
 ## <a name="contributing"></a>Contributing
 In the spirit of [free software][free-sw], **everyone** is encouraged to help improve
