@@ -1,5 +1,6 @@
 require 'rubygems/local_remote_options'
 require 'rubygems/gemcutter_utilities'
+require 'rubygems/command'
 
 class Gem::Commands::WebhookCommand < Gem::Command
   include Gem::LocalRemoteOptions

@@ -1,6 +1,7 @@
 require 'rubygems/local_remote_options'
 require 'rubygems/version_option'
 require 'rubygems/gemcutter_utilities'
+require 'rubygems/command'
 
 class Gem::Commands::YankCommand < Gem::Command
   include Gem::LocalRemoteOptions
@@ -26,7 +27,7 @@ class Gem::Commands::YankCommand < Gem::Command
     add_option('--undo') do |value, options|
       options[:undo] = true
     end
-    
+
     add_option('-k', '--key KEY_NAME',
                'Use API key from your gem credentials file') do |value, options|
       options[:key] = value
