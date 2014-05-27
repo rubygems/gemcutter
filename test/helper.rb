@@ -1,11 +1,13 @@
 require 'rubygems/commands/webhook_command'
 require 'rubygems/commands/yank_command'
-require 'test/unit'
 require 'shoulda'
 require 'active_support'
 require 'active_support/test_case'
 require 'webmock'
 require 'rr'
+
+# Backwards compatability for older versions of ActiveSupport
+defined?(Minitest) ? (require 'minitest/autorun') : (require 'test/unit')
 
 WebMock.disable_net_connect!
 
